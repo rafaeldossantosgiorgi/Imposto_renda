@@ -1,4 +1,4 @@
-import api from './api';
+import api from "./api";
 
 export interface LoginResponse {
   token: string;
@@ -8,8 +8,6 @@ export interface LoginResponse {
     email: string;
     userType: 'client' | 'accountant';
   };
-  requiresTwoFactor?: boolean;
-  tempSession?: string;
 }
 
 export interface RegisterData {
@@ -22,27 +20,17 @@ export interface RegisterData {
 
 export const authService = {
   login: async (email: string, password: string, userType: 'client' | 'accountant'): Promise<LoginResponse> => {
-    const response = await api.post('/auth/login', { email, password, userType });
-    return response.data;
-  },
-
-  verifyTwoFactor: async (tempSession: string, code: string): Promise<LoginResponse> => {
-    const response = await api.post('/auth/verify-2fa', { tempSession, code });
+    const response = await api.post('/users/login', { email, password, userType });
     return response.data;
   },
 
   register: async (data: RegisterData): Promise<LoginResponse> => {
-    const response = await api.post('/auth/register', data);
+    const response = await api.post('/users/register', data);
     return response.data;
   },
 
   getCurrentUser: async () => {
-    const response = await api.get('/auth/me');
-    return response.data;
-  },
-
-  refreshToken: async (refreshToken: string) => {
-    const response = await api.post('/auth/refresh-token', { refreshToken });
+    const response = await api.get('/users/profile');
     return response.data;
   },
 };

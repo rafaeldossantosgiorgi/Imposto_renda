@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { AppDataSource } from "./database";
 import { userRouter } from "./routes/user.routes";
+import { assetRouter } from "./routes/asset.routes";
 import { errorHandler } from "./middlewares/error";
 
 const app = express();
@@ -11,6 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/users", userRouter);
+app.use("/api/assets", assetRouter);
 
 app.use(errorHandler);
 
